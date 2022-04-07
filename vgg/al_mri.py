@@ -1,7 +1,10 @@
 from keras.models import load_model
 import streamlit as st
 import numpy as np # linear algebra
-
+from keras.applications.vgg16 import VGG16
+from keras.layers import Flatten, Dense
+import keras
+# load model
 
 import os
 from PIL import Image, ImageOps
@@ -16,8 +19,25 @@ st.subheader("Predicts the diagnosis of Alzheimer's disease based on the patient
 st.write("This application uses VGG16")
 
 root_dir = os.path.dirname(__file__)
-model_path = os.path.join(root_dir,'vgg')
-vgg16 = load_model(model_path)
+
+def load_model():
+    model = keras.models.Sequential()
+    # load model
+    VGG = VGG16(include_top=False, input_shape=(W,H,3),pooling='avg')    
+    print(VGG.summary())
+    # Freezing Layers
+
+    for layer in VGG.layers:
+        layer.trainable=False
+        
+    model.add(VGG)
+    model.add(Flatten())
+    model.add(Dense(512,activation='relu',kernel_initializer='he_uniform'))
+    model.add(Dense(128,activation='relu',kernel_initializer='he_uniform'))
+    model.add(Dense(32,activation='relu',kernel_initializer='he_uniform'))
+    model.add(Dense(4,activation='softmax'))
+    model.load_weights(os.path.join(os.path.dirname(__file__),'vgg.h5'))
+    return model
 
 
 file = st.file_uploader("Please upload an mri image.", type=["jpg", "png"])
