@@ -1,4 +1,4 @@
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import streamlit as st
 import numpy as np # linear algebra
 
