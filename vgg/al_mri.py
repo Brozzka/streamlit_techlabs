@@ -39,7 +39,7 @@ def load_model():
     model.load_weights(os.path.join(os.path.dirname(__file__),'vgg.h5'))
     return model
 
-
+model = load_model()
 file = st.file_uploader("Please upload an mri image.", type=["jpg", "png"])
 
 
