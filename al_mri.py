@@ -1,6 +1,7 @@
+from tensorflow.keras.models import load_model
 import streamlit as st
 import numpy as np # linear algebra
-from keras.models import load_model
+
 
 import os
 from PIL import Image, ImageOps
