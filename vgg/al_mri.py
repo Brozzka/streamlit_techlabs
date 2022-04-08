@@ -57,7 +57,7 @@ if file is None:
     st.text("No image file has been uploaded.")
 else:
     image = Image.open(file)
-    predictions = import_and_predict(image, vgg16)
+    predictions = import_and_predict(image, model)
     class_names = ["MildDemented", "ModerateDemented", "NonDemented", "VeryMildDemented"]
     string = "The patient is predicted to be: " + class_names[np.argmax(predictions)]
     st.success(string)
